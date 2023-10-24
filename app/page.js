@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react';
 
 const Home = () => {
@@ -59,12 +60,9 @@ const Home = () => {
     <div className="flex h-screen items-center justify-center flex-col">
       {subscription && (
         <button onClick={sendNotification} className="p-4 bg-blue-500 text-white rounded mb-4">
-          Enviar Notificação
+          Enviar Notificação em 10s
         </button>
       )}
-      <div className="text-gray-600">
-        Abra o console para ver os logs.
-      </div>
       {notificationSent && <p>Notificação enviada com sucesso!</p>}
     </div>
   );
