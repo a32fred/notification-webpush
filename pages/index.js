@@ -67,7 +67,6 @@ const Home = () => {
     try {
       const response = await fetch('https://socketio.a32fred.repl.co/key');
       const data = await response.json();
-      console.log(data.publicKey);
     } catch (error) {
       console.error('Erro ao obter a publicKey:', error);
     }
