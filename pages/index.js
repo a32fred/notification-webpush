@@ -19,7 +19,7 @@ const Home = () => {
           }
 
 
-          console.log('Service Worker registrado com sucesso:', serviceWorker);
+          console.log('Service Worker registrado com sucesso:');
         })
         .catch((error) => {
           console.error('Erro ao registrar Service Worker:', error);
@@ -27,40 +27,6 @@ const Home = () => {
     }
   }, []);
 
-  // const handleSubscribe = () => {
-  //   if ('PushManager' in window) {
-  //     navigator.serviceWorker.ready.then((serviceWorker) => {
-  //       serviceWorker.pushManager.subscribe({
-  //         userVisibleOnly: true,
-  //         applicationServerKey: urlBase64ToUint8Array('BCM9uLyX4xMfDk_GUFcSKQNP4qliB9__xRvIEaJUIdNEl99ntVpA4j3-FKDHxwN63z9Dh-ZWOdc3GD7tuzJRrDk') // Substitua pela sua Public Key
-  //       })
-  //       .then((subscription) => {
-  //         console.log('Inscrição para notificações realizada com sucesso:', subscription);
-  //       })
-  //       .catch((error) => {
-  //         console.error('Erro ao se inscrever para notificações:', error);
-  //       });
-  //     });
-  //   } else {
-  //     console.warn('O navegador não suporta notificações push.');
-  //   }
-  // };
-
-  // const urlBase64ToUint8Array = (base64String) => {
-  //   const padding = '='.repeat((4 - base64String.length % 4) % 4);
-  //   const base64 = (base64String + padding)
-  //     .replace(/\-/g, '+')
-  //     .replace(/_/g, '/');
-
-  //   const rawData = window.atob(base64);
-  //   const outputArray = new Uint8Array(rawData.length);
-
-  //   for (let i = 0; i < rawData.length; ++i) {
-  //     outputArray[i] = rawData.charCodeAt(i);
-  //   }
-
-  //   return outputArray;
-  // };
 
   const viewkey = async () => {
     try {
