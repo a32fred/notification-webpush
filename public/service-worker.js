@@ -4,7 +4,7 @@ self.addEventListener('push', function(event) {
     };
   
     event.waitUntil(
-      self.registration.showNotification('Nova Notificação', options)
+      self.registration.showNotification('OLHAAAAA', options)
     );
   });
   
