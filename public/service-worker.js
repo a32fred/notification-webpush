@@ -1,10 +1,11 @@
 self.addEventListener('push', function(event) {
-    const options = {
-      body: "testando"
-    };
-  
+
+    const body = event.data?.text() ?? 'nova notificação'
+
     event.waitUntil(
-      self.registration.showNotification('OLHAAAAA', options)
+      self.registration.showNotification('CHAT PRIVADINHO', {
+        body: body
+      })
     );
   });
   
