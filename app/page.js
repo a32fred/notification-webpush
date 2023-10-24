@@ -11,14 +11,14 @@ const Home = () => {
         let currentSubscription = await serviceWorker.pushManager.getSubscription();
 
         if (!currentSubscription) {
-          const response = await fetch('https://socketio.a32fred.repl.co/key');
+          const response = await fetch('https://your-backend.com/key');
           const data = await response.json();
           currentSubscription = await serviceWorker.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: data.publicKey
           });
 
-          await fetch('https://socketio.a32fred.repl.co/registerFCMToken', {
+          await fetch('https://your-backend.com/registerFCMToken', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const Home = () => {
 
   const sendNotification = async () => {
     try {
-      const response = await fetch('https://socketio.a32fred.repl.co/sendNotification', {
+      const response = await fetch('https://your-backend.com/sendNotification', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
