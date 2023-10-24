@@ -10,7 +10,6 @@ const Home = () => {
           if (!subscription) {
             const response = await fetch('https://socketio.a32fred.repl.co/key');
             const data = await response.json();
-            console.log(data.publicKey);
             subscription = await serviceWorker.pushManager.subscribe({
               userVisibleOnly: true,
               applicationServerKey: data.publicKey
