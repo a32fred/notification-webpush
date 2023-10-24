@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-
+//fred
 const Home = () => {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
