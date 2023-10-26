@@ -1,51 +1,44 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Home = () => {
   const [notificationSent, setNotificationSent] = useState(false);
-  const [subscription, setSubscription] = useState(null);
 
-  const registerServiceWorker = async () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(async (serviceWorker) => {
-        let currentSubscription = await serviceWorker.pushManager.getSubscription();
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      try {
+        const registration = navigator.serviceWorker.register('/service-worker.js');
+        console.log('Service Worker registrado com sucesso:', registration);
+      } catch (error) {
+        console.error('Erro ao registrar o Service Worker:', error);
+      }
+    }
+  }, [])
 
-        if (!currentSubscription) {
-          const response = await fetch('https://insecureconsiderateadvance.a32fred.repl.co/key');
-          const data = await response.json();
-          currentSubscription = await serviceWorker.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: data.publicKey
-          });
+  const registerSubscription = async () => {
+    try {
+      const responsePublicKey = await fetch('https://insecureconsiderateadvance.a32fred.repl.co/key');
+      const dataKey = await responsePublicKey.json();
 
-          await fetch('https://insecureconsiderateadvance.a32fred.repl.co/registerFCMToken', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ subscription: currentSubscription }),
-          });
-
-          setSubscription(currentSubscription);
-        }
-
-        console.log('Service Worker registrado com sucesso:', serviceWorker);
+      const registration = await navigator.serviceWorker.ready;
+      const pushSubscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: dataKey.publicKey,
       })
-      .catch((error) => {
-        console.error('Erro ao registrar Service Worker:', error);
-      });
+      return pushSubscription;
+    } catch (err) {
+      console.error(err)
+    }
 
   }
+
   const sendNotification = async () => {
 
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
 
       const permission = await Notification.requestPermission()
       if (permission == 'granted') {
-
-        registerServiceWorker();
-
-
+        const subscription = await registerSubscription();
         try {
           const response = await fetch('https://insecureconsiderateadvance.a32fred.repl.co/sendNotification', {
             method: 'POST',
@@ -56,7 +49,12 @@ const Home = () => {
           });
 
           if (response.ok) {
-            setNotificationSent(true);
+
+            setTimeout(() => {
+              setNotificationSent(true);
+            }, 9000);
+
+            console.log("resposta sim do servidor")
           } else {
             console.error('Erro ao enviar notificação:', response);
           }
@@ -79,7 +77,7 @@ const Home = () => {
         click para e aceite as notificações e espere 10 segundos
       </button>
 
-      {notificationSent && <p>Notificação enviada com sucesso!</p>}
+      {notificationSent && <p>sucess</p>}
     </div>
   );
 };
