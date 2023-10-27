@@ -1,7 +1,7 @@
 # Projeto de Notificações Push
 
 Este projeto tem como objetivo demonstrar a implementação de notificações push em uma aplicação web utilizando JavaScript, Node.js, Express e Web Push.
-site para Demo: [So clicar para abrir o site](https://notification-webpush.vercel.app/) 
+
 
 >no momento não funciona em IOS 
 
