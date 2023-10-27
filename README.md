@@ -1,6 +1,9 @@
 # Projeto de Notificações Push
 
 Este projeto tem como objetivo demonstrar a implementação de notificações push em uma aplicação web utilizando JavaScript, Node.js, Express e Web Push.
+site para Demo: [So clicar para abrir o site](https://notification-webpush.vercel.app/) 
+
+>no momento não funciona em IOS 
 
 ![preview](https://cdn.discordapp.com/attachments/1088804898117795945/1166304613935357983/image.png?ex=654a00d0&is=65378bd0&hm=a415b3d509af64bb4d11dc1c28fa04218ceb059a6dfd90472c50288ac710e280&)
 
@@ -32,7 +35,7 @@ npm install
 ```bash
 npm run dev
 ```
->O servidor estará disponível em [localhost:3000](localhost:3000)
+-O servidor estará disponível em [localhost:3000](localhost:3000)
 
 ## Criação do back end
 
