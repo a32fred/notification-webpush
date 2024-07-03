@@ -17,7 +17,7 @@ const Home = () => {
 
   const registerSubscription = async () => {
     try {
-      const responsePublicKey = await fetch('https://insecureconsiderateadvance.a32fred.repl.co/key');
+      const responsePublicKey = await fetch('https://64942cd2-b7a5-463e-b085-2fea8354be19-00-4968fmw3bqzx.spock.replit.dev/key');
       const dataKey = await responsePublicKey.json();
 
       const registration = await navigator.serviceWorker.ready;
@@ -40,7 +40,7 @@ const Home = () => {
       if (permission == 'granted') {
         const subscription = await registerSubscription();
         try {
-          const response = await fetch('https://insecureconsiderateadvance.a32fred.repl.co/sendNotification', {
+          const response = await fetch('https://64942cd2-b7a5-463e-b085-2fea8354be19-00-4968fmw3bqzx.spock.replit.dev/sendNotification', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
