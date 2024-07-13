@@ -1,83 +1,94 @@
-'use client'
-import { useEffect, useState } from 'react';
+"use client";
+import { useEffect, useState } from "react";
 
 const Home = () => {
   const [notificationSent, setNotificationSent] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       try {
-        const registration = navigator.serviceWorker.register('/service-worker.js');
-        console.log('Service Worker registrado com sucesso:', registration);
+        const registration =
+          navigator.serviceWorker.register("/service-worker.js");
+        console.log("Service Worker registrado com sucesso:", registration);
       } catch (error) {
-        console.error('Erro ao registrar o Service Worker:', error);
+        console.error("Erro ao registrar o Service Worker:", error);
       }
     }
-  }, [])
+  }, []);
 
-  const registerSubscription = async () => {
+  
+
+  function urlB64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+
+    const rawData = window.atob(base64);
+    return new Uint8Array([...rawData].map(char => char.charCodeAt(0)));
+}
+
+const registerSubscription = async () => {
     try {
-      const responsePublicKey = await fetch('https://64942cd2-b7a5-463e-b085-2fea8354be19-00-4968fmw3bqzx.spock.replit.dev/key');
-      const dataKey = await responsePublicKey.json();
-
-      const registration = await navigator.serviceWorker.ready;
-      const pushSubscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: dataKey.publicKey,
-      })
-      return pushSubscription;
-    } catch (err) {
-      console.error(err)
+        const responsePublicKey = await fetch(process.env.NEXT_PUBLIC_API_URL + '/key');
+        const dataKey = await responsePublicKey.json();
+        
+        const registration = await navigator.serviceWorker.ready;
+        const pushSubscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlB64ToUint8Array(dataKey.publicKey),
+        });
+        console.log('Push Subscription criada:', pushSubscription);
+        return pushSubscription;
+    } catch (error) {
+        console.error('Erro ao registrar a subscription:', error);
+        throw error; // Para ser tratado na função chamadora
     }
-
-  }
+};
 
   const sendNotification = async () => {
-
-    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-
-      const permission = await Notification.requestPermission()
-      if (permission == 'granted') {
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      const permission = await Notification.requestPermission();
+      if (permission == "granted") {
         const subscription = await registerSubscription();
         try {
-          const response = await fetch('https://64942cd2-b7a5-463e-b085-2fea8354be19-00-4968fmw3bqzx.spock.replit.dev/sendNotification', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ subscription }),
-          });
+          const response = await fetch(
+            process.env.NEXT_PUBLIC_API_URL + "/sendNotification",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ subscription }),
+            }
+          );
 
           if (response.ok) {
-
             setTimeout(() => {
               setNotificationSent(true);
             }, 9000);
-
-            console.log("resposta sim do servidor")
+            console.log("resposta sim do servidor");
           } else {
-            console.error('Erro ao enviar notificação:', response);
+            console.error("Erro ao enviar notificação:", response);
           }
         } catch (error) {
-          console.error('Erro ao enviar notificação:', error);
+          console.error("Erro ao enviar notificação:", error);
         }
-      };
-
-    } else {
-      alert("vc negou as notificação")
+      } else {
+        alert("Você negou as notificações");
+      }
     }
-
-  }
-
+  };
 
   return (
     <div className="flex h-screen items-center justify-center flex-col">
-
-      <button onClick={sendNotification} className="p-4 bg-blue-500 text-white rounded mb-4">
-        click para e aceite as notificações e espere 10 segundos
+      <button
+        onClick={sendNotification}
+        className="p-4 bg-blue-500 text-white rounded mb-4"
+      >
+        Clique para aceitar as notificações e espere 10 segundos
       </button>
-
-      {notificationSent && <p>sucess</p>}
+      {notificationSent && <p>Sucesso</p>}
     </div>
   );
 };

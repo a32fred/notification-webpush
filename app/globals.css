@@ -19,9 +19,22 @@
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    to bottom,
+    transparent,
+    rgb(var(--background-end-rgb))
+  )
+  rgb(var(--background-start-rgb));
+}
+
+/* Acessibilidade */
+a {
+  color: #0000EE;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus, input:focus {
+  outline: 2px solid #000;
 }
