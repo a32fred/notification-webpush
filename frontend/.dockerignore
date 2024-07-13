@@ -1,0 +1,23 @@
+# Node modules
+node_modules
+
+# Logs
+logs
+*.log
+
+# Temporary files
+tmp
+*.tmp
+
+# Build output
+.next
+
+# Environment variables
+.env
+
+# Other unwanted files
+.DS_Store
+*.swp
+
+# Docker ignore itself
+.dockerignore

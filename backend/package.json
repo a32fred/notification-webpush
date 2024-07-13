@@ -1,0 +1,24 @@
+{
+    "name": "nodejs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@types/node": "^20.14.10",
+        "cors": "^2.8.5",
+        "express": "^4.19.2",
+        "glob": "^11.0.0",
+        "http": "^0.0.1-security",
+        "node-fetch": "^3.3.2",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.1",
+        "web-push": "^3.6.7",
+        "winston": "^3.13.1"
+    }
+}
